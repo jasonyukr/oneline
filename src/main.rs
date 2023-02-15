@@ -23,13 +23,13 @@ fn main() {
                     }
                 }
                 if !is_quoted {
-                    out.push_str("'");
+                    out.push_str("\"");
                 }
 
                 out.push_str(&line_trim);
 
                 if !is_quoted {
-                    out.push_str("'");
+                    out.push_str("\"");
                 }
             } else {
                 if !is_first {
