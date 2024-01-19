@@ -1,6 +1,22 @@
 use std::io::{self, BufRead};
+use std::env;
+
+fn print_usage() {
+    println!("{}", "Usage : oneline {-s}");
+    println!("   -s   -> use single quote(') character. the default is double quote");
+}
 
 fn main() {
+    let mut single_mode = false;
+    for arg in env::args() {
+        if arg == "-h" || arg == "--help" {
+            print_usage();
+            return;
+        } else if arg == "-s" {
+            single_mode = true;
+        }
+    }
+
     let mut is_first = true;
     let mut out = String::from("");
     let stdin = io::stdin();
@@ -23,13 +39,21 @@ fn main() {
                     }
                 }
                 if !is_quoted {
-                    out.push_str("\"");
+                    if single_mode {
+                        out.push_str("'");
+                    } else {
+                        out.push_str("\"");
+                    }
                 }
 
                 out.push_str(&line_trim);
 
                 if !is_quoted {
-                    out.push_str("\"");
+                    if single_mode {
+                        out.push_str("'");
+                    } else {
+                        out.push_str("\"");
+                    }
                 }
             } else {
                 if !is_first {
